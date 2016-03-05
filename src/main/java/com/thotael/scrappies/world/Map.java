@@ -1,4 +1,4 @@
-package com.thotael.scrappies;
+package com.thotael.scrappies.world;
 
 import java.util.Arrays;
 
