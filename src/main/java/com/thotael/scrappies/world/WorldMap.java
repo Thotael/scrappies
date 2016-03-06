@@ -1,6 +1,5 @@
 package com.thotael.scrappies.world;
 
-import com.thotael.scrappies.world.animalcule.Scrappy;
 import com.thotael.scrappies.world.terrain.Ground;
 
 import java.util.HashMap;
@@ -29,21 +28,24 @@ public class WorldMap {
     private String mapToString(Map<Integer, Row> map) {
         StringBuilder sb = new StringBuilder();
 
-        map.values().forEach(row -> {
-            row.getElements().stream()
-                    .map(MapObject::getAppearance)
-                    .forEach(sb::append);
-            sb.append("\n");
-        });
+        map.values()
+                .forEach(row -> appendSBWithRowElements(sb, row));
 
         return sb.toString();
     }
 
-    public void place(Scrappy scrappy, int x, int y) throws OutsideTheMapPlacementException {
+    private void appendSBWithRowElements(StringBuilder sb, Row row) {
+        row.getElements().stream()
+                .map(MapObject::getAppearance)
+                .forEach(sb::append);
+        sb.append("\n");
+    }
+
+    public void place(MapObject object, int x, int y) throws OutsideTheMapPlacementException {
         if (x >= width || y >= height) {
             throw new OutsideTheMapPlacementException(width, height, x, y);
         }
-        maps.get(y).getElements().set(x, scrappy);
+        maps.get(y).getElements().set(x, object);
     }
 
 }
