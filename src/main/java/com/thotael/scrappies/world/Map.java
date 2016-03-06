@@ -6,14 +6,12 @@ import java.util.Arrays;
 
 public class Map {
 
-    private static final String FILLER_CHAR = "_";
-
-    private String[][] map;
+    private MapObject[][] map;
 
     public Map(int height, int width) {
-        this.map = new String[width][height];
-        for (String[] row : map) {
-            Arrays.fill(row, FILLER_CHAR);
+        this.map = new MapObject[width][height];
+        for (MapObject[] row : map) {
+            Arrays.fill(row, new Ground());
         }
     }
 
@@ -22,13 +20,13 @@ public class Map {
         return mapToString(map);
     }
 
-    private String mapToString(String[][] array) {
+    private String mapToString(MapObject[][] array) {
         String result = "";
 
         for (int i = 0; i < array.length; i++) {
-            String[] row = array[i];
-            for (String cell : row) {
-                result += cell;
+            MapObject[] row = array[i];
+            for (MapObject cell : row) {
+                result += cell.getAppearance();
             }
             if (i < array.length - 1) {
                 result += "\n";
@@ -38,6 +36,6 @@ public class Map {
     }
 
     public void place(Scrappy scrappy, int x, int y) {
-        map[x][y] = scrappy.getAppearance();
+        map[x][y] = scrappy;
     }
 }
