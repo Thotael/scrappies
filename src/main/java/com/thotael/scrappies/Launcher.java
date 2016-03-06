@@ -8,7 +8,7 @@ public class Launcher {
 
     public static void main(String[] args) throws OutsideTheMapException {
         WorldMap map = new WorldMap(7, 5);
-        map.place(new Scrappy(), 6, 4);
+        map.place(new Scrappy(), 3, 3);
         System.out.println(map);
     }
 

@@ -1,6 +1,7 @@
 package com.thotael.scrappies.world;
 
 import com.thotael.scrappies.world.terrain.Ground;
+import com.thotael.scrappies.world.terrain.Mountain;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,11 +13,21 @@ public class WorldMap {
     private int height;
 
     public WorldMap(int width, int height) {
+        if (width < 3 || height < 3) {
+            throw new TooSmallAreaException();
+        }
         this.width = width;
         this.height = height;
+        fillTheMap(width, height);
+    }
 
+    private void fillTheMap(int width, int height) {
         for (int col = 0; col < height; col++) {
-            maps.put(col, new Row(width, new Ground()));
+            if (col == 0 || col == height - 1) {
+                maps.put(col, new Row(width, new Mountain()));
+            } else {
+                maps.put(col, new Row(width, new Ground(), new Mountain()));
+            }
         }
     }
 

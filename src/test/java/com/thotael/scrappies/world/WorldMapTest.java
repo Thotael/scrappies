@@ -12,64 +12,65 @@ public class WorldMapTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
     private WorldMap map;
 
-    @Test
-    public void create_emptyMap_correctlyFilled() {
+    @Test(expected = TooSmallAreaException.class)
+    public void create_emptyMap() {
         // given
         map = new WorldMap(0, 0);
 
-        // then
-        assertThat(map.toString()).isEqualTo("");
+        // then throw exception
     }
 
-    @Test
-    public void create_1x1Map_correctlyFilled() {
+    @Test(expected = TooSmallAreaException.class)
+    public void create_2x3Map() {
         // given
-        map = new WorldMap(1, 1);
+        map = new WorldMap(2, 3);
 
-        // then
-        assertThat(map.toString()).isEqualTo("_\n");
+        // then throw exception
     }
 
-    @Test
-    public void create_2x1Map_correctlyFilled() {
+    @Test(expected = TooSmallAreaException.class)
+    public void create_3x2Map() {
         // given
-        map = new WorldMap(2, 1);
+        map = new WorldMap(3, 2);
 
-        // then
-        assertThat(map.toString()).isEqualTo("__\n");
+        // then throw exception
     }
 
     @Test
-    public void create_2x2Map_correctlyFilled() {
-        // given
-        map = new WorldMap(2, 2);
-
-        // then
-        assertThat(map.toString()).isEqualTo(
-                "__\n" +
-                "__\n"
-        );
-    }
-
-    @Test
-    public void create_3x3Map_correctlyFilled() {
+    public void create_3x3Map() {
         // given
         map = new WorldMap(3, 3);
 
         // then
         assertThat(map.toString()).isEqualTo(
-                "___\n" +
-                "___\n" +
-                "___\n"
+                "^^^\n" +
+                "^_^\n" +
+                "^^^\n"
+        );
+    }
+
+    @Test
+    public void create_7x5Map_correctlyFilled() {
+        // given
+        map = new WorldMap(7, 5);
+
+        // then
+        assertThat(map.toString()).isEqualTo(
+                "^^^^^^^\n" +
+                "^_____^\n" +
+                "^_____^\n" +
+                "^_____^\n" +
+                "^^^^^^^\n"
         );
     }
 
     @Test
     public void placedScrappy_isDisplayed() throws OutsideTheMapException {
         // given
-        map = new WorldMap(3, 3);
+        map = new WorldMap(7, 5);
         Scrappy scrappy = new Scrappy();
 
         // when
@@ -77,9 +78,11 @@ public class WorldMapTest {
 
         // then
         assertThat(map.toString()).isEqualTo(
-                "___\n" +
-                "_$_\n" +
-                "___\n"
+                "^^^^^^^\n" +
+                "^$____^\n" +
+                "^_____^\n" +
+                "^_____^\n" +
+                "^^^^^^^\n"
         );
     }
 
@@ -132,17 +135,17 @@ public class WorldMapTest {
     @Test
     public void placedScrappy_equalWidthAndHeight() throws OutsideTheMapException {
         // given
-        map = new WorldMap(3, 2);
+        map = new WorldMap(7, 5);
         Scrappy scrappy = new Scrappy();
 
         // when
-        assertThatThrownBy(() -> map.place(scrappy, 3, 2))
+        assertThatThrownBy(() -> map.place(scrappy, 7, 5))
 
         // then
                 .isInstanceOf(OutsideTheMapException.class)
                 .hasMessage("Trying to reach outside the map:\n" +
-                        "x = 3, map width range 0-2\n" +
-                        "y = 2, map height range 0-1\n");
+                        "x = 7, map width range 0-6\n" +
+                        "y = 5, map height range 0-4\n");
     }
 
     @Test
@@ -204,4 +207,5 @@ public class WorldMapTest {
         // then
         assertThat(object).isEqualTo(scrappy);
     }
+
 }

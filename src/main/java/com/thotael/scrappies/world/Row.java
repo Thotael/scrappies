@@ -10,15 +10,21 @@ public class Row {
     private List<MapObject> elements = new ArrayList<>();
 
     public Row(int length, MapObject object) {
-        fill(length, object);
+        elements = getFilledList(length, object);
+    }
+
+    public Row(int length, MapObject object, MapObject border) {
+        elements.add(border);
+        elements.addAll(getFilledList(length - 2, object));
+        elements.add(border);
     }
 
     public List<MapObject> getElements() {
         return elements;
     }
 
-    public void fill(int length, MapObject object) {
-        elements = Stream.generate(() -> object)
+    public List<MapObject> getFilledList(int length, MapObject object) {
+        return Stream.generate(() -> object)
                 .limit(length)
                 .collect(Collectors.toList());
     }
