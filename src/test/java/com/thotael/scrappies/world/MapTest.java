@@ -13,17 +13,17 @@ public class MapTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-    private Map map;
+    private WorldMap map;
 
     @Before
     public void before() {
-        map = new Map(3, 3);
+        map = new WorldMap(3, 3);
     }
 
     @Test
     public void create_emptyMap_correctlyFilled() {
         // given
-        map = new Map(0, 0);
+        map = new WorldMap(0, 0);
 
         // then
         assertThat(map.toString()).isEqualTo("");
@@ -32,43 +32,43 @@ public class MapTest {
     @Test
     public void create_1x1Map_correctlyFilled() {
         // given
-        map = new Map(1, 1);
+        map = new WorldMap(1, 1);
 
         // then
-        assertThat(map.toString()).isEqualTo("_");
+        assertThat(map.toString()).isEqualTo("_\n");
     }
 
     @Test
     public void create_2x1Map_correctlyFilled() {
         // given
-        map = new Map(2, 1);
+        map = new WorldMap(2, 1);
 
         // then
-        assertThat(map.toString()).isEqualTo("__");
+        assertThat(map.toString()).isEqualTo("__\n");
     }
 
     @Test
     public void create_2x2Map_correctlyFilled() {
         // given
-        map = new Map(2, 2);
+        map = new WorldMap(2, 2);
 
         // then
         assertThat(map.toString()).isEqualTo(
                 "__\n" +
-                "__"
+                "__\n"
         );
     }
 
     @Test
     public void create_3x3Map_correctlyFilled() {
         // given
-        map = new Map(3, 3);
+        map = new WorldMap(3, 3);
 
         // then
         assertThat(map.toString()).isEqualTo(
                 "___\n" +
                 "___\n" +
-                "___"
+                "___\n"
         );
     }
 
@@ -84,14 +84,14 @@ public class MapTest {
         assertThat(map.toString()).isEqualTo(
                 "___\n" +
                 "_$_\n" +
-                "___"
+                "___\n"
         );
     }
 
     @Test
     public void placedScrappy_tooBigHeight() {
         // given
-        map = new Map(5, 5);
+        map = new WorldMap(5, 5);
         Scrappy scrappy = new Scrappy();
 
         // when
@@ -106,7 +106,7 @@ public class MapTest {
     @Test
     public void placedScrappy_tooBigWidth() throws OutsideTheMapPlacementException {
         // given
-        map = new Map(5, 5);
+        map = new WorldMap(5, 5);
         Scrappy scrappy = new Scrappy();
 
         // when
@@ -121,7 +121,7 @@ public class MapTest {
     @Test
     public void placedScrappy_tooBigWidthAndHeight() throws OutsideTheMapPlacementException {
         // given
-        map = new Map(5, 5);
+        map = new WorldMap(5, 5);
         Scrappy scrappy = new Scrappy();
 
         // when
@@ -137,7 +137,7 @@ public class MapTest {
     @Test
     public void placedScrappy_equalWidthAndHeight() throws OutsideTheMapPlacementException {
         // given
-        map = new Map(3, 2);
+        map = new WorldMap(3, 2);
         Scrappy scrappy = new Scrappy();
 
         // when
