@@ -154,7 +154,7 @@ public class WorldMapTest {
         // when
         assertThatThrownBy(() -> map.getObject(7, 3))
 
-                // then
+        // then
                 .isInstanceOf(OutsideTheMapException.class)
                 .hasMessage("Trying to reach outside the map:\n" +
                         "x = 7, map width range 0-6\n");
@@ -169,7 +169,7 @@ public class WorldMapTest {
         // when
         assertThatThrownBy(() -> map.getObject(3, 5))
 
-                // then
+        // then
                 .isInstanceOf(OutsideTheMapException.class)
                 .hasMessage("Trying to reach outside the map:\n" +
                         "y = 5, map height range 0-4\n");
@@ -184,7 +184,7 @@ public class WorldMapTest {
         // when
         assertThatThrownBy(() -> map.getObject(7, 5))
 
-                // then
+        // then
                 .isInstanceOf(OutsideTheMapException.class)
                 .hasMessage("Trying to reach outside the map:\n" +
                         "x = 7, map width range 0-6\n" +
