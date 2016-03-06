@@ -1,12 +1,12 @@
 package com.thotael.scrappies;
 
-import com.thotael.scrappies.world.OutsideTheMapPlacementException;
+import com.thotael.scrappies.world.OutsideTheMapException;
 import com.thotael.scrappies.world.WorldMap;
 import com.thotael.scrappies.world.animalcule.Scrappy;
 
 public class Launcher {
 
-    public static void main(String[] args) throws OutsideTheMapPlacementException {
+    public static void main(String[] args) throws OutsideTheMapException {
         WorldMap map = new WorldMap(7, 5);
         map.place(new Scrappy(), 6, 4);
         System.out.println(map);

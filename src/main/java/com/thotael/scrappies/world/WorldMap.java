@@ -41,11 +41,21 @@ public class WorldMap {
         sb.append("\n");
     }
 
-    public void place(MapObject object, int x, int y) throws OutsideTheMapPlacementException {
-        if (x >= width || y >= height) {
-            throw new OutsideTheMapPlacementException(width, height, x, y);
-        }
+    public void place(MapObject object, int x, int y) throws OutsideTheMapException {
+        checkIfReachingWithinTheMap(x, y);
+
         maps.get(y).getElements().set(x, object);
     }
 
+    public MapObject getObject(int x, int y) throws OutsideTheMapException {
+        checkIfReachingWithinTheMap(x, y);
+
+        return maps.get(y).getElements().get(x);
+    }
+
+    private void checkIfReachingWithinTheMap(int x, int y) throws OutsideTheMapException {
+        if (x >= width || y >= height) {
+            throw new OutsideTheMapException(width, height, x, y);
+        }
+    }
 }

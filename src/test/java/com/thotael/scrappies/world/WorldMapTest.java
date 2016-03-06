@@ -1,7 +1,6 @@
 package com.thotael.scrappies.world;
 
 import com.thotael.scrappies.world.animalcule.Scrappy;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -9,16 +8,11 @@ import org.junit.rules.ExpectedException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class MapTest {
+public class WorldMapTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
     private WorldMap map;
-
-    @Before
-    public void before() {
-        map = new WorldMap(3, 3);
-    }
 
     @Test
     public void create_emptyMap_correctlyFilled() {
@@ -73,8 +67,9 @@ public class MapTest {
     }
 
     @Test
-    public void placedScrappy_isDisplayed() throws OutsideTheMapPlacementException {
+    public void placedScrappy_isDisplayed() throws OutsideTheMapException {
         // given
+        map = new WorldMap(3, 3);
         Scrappy scrappy = new Scrappy();
 
         // when
@@ -98,13 +93,13 @@ public class MapTest {
         assertThatThrownBy(() -> map.place(scrappy, 1, 15))
 
         // then
-                .isInstanceOf(OutsideTheMapPlacementException.class)
-                .hasMessage("Trying to place object outside the map:\n" +
+                .isInstanceOf(OutsideTheMapException.class)
+                .hasMessage("Trying to reach outside the map:\n" +
                         "y = 15, map height range 0-4\n");
     }
 
     @Test
-    public void placedScrappy_tooBigWidth() throws OutsideTheMapPlacementException {
+    public void placedScrappy_tooBigWidth() throws OutsideTheMapException {
         // given
         map = new WorldMap(5, 5);
         Scrappy scrappy = new Scrappy();
@@ -113,13 +108,13 @@ public class MapTest {
         assertThatThrownBy(() -> map.place(scrappy, 15, 1))
 
         // then
-                .isInstanceOf(OutsideTheMapPlacementException.class)
-                .hasMessage("Trying to place object outside the map:\n" +
+                .isInstanceOf(OutsideTheMapException.class)
+                .hasMessage("Trying to reach outside the map:\n" +
                         "x = 15, map width range 0-4\n");
     }
 
     @Test
-    public void placedScrappy_tooBigWidthAndHeight() throws OutsideTheMapPlacementException {
+    public void placedScrappy_tooBigWidthAndHeight() throws OutsideTheMapException {
         // given
         map = new WorldMap(5, 5);
         Scrappy scrappy = new Scrappy();
@@ -128,14 +123,14 @@ public class MapTest {
         assertThatThrownBy(() -> map.place(scrappy, 15, 15))
 
         // then
-                .isInstanceOf(OutsideTheMapPlacementException.class)
-                .hasMessage("Trying to place object outside the map:\n" +
+                .isInstanceOf(OutsideTheMapException.class)
+                .hasMessage("Trying to reach outside the map:\n" +
                         "x = 15, map width range 0-4\n" +
                         "y = 15, map height range 0-4\n");
     }
 
     @Test
-    public void placedScrappy_equalWidthAndHeight() throws OutsideTheMapPlacementException {
+    public void placedScrappy_equalWidthAndHeight() throws OutsideTheMapException {
         // given
         map = new WorldMap(3, 2);
         Scrappy scrappy = new Scrappy();
@@ -144,9 +139,69 @@ public class MapTest {
         assertThatThrownBy(() -> map.place(scrappy, 3, 2))
 
         // then
-                .isInstanceOf(OutsideTheMapPlacementException.class)
-                .hasMessage("Trying to place object outside the map:\n" +
+                .isInstanceOf(OutsideTheMapException.class)
+                .hasMessage("Trying to reach outside the map:\n" +
                         "x = 3, map width range 0-2\n" +
                         "y = 2, map height range 0-1\n");
+    }
+
+    @Test
+    public void getScrappyFromMap_tooBigX() throws OutsideTheMapException {
+        // given
+        map = new WorldMap(7, 5);
+        map.place(new Scrappy(), 3, 3);
+
+        // when
+        assertThatThrownBy(() -> map.getObject(7, 3))
+
+                // then
+                .isInstanceOf(OutsideTheMapException.class)
+                .hasMessage("Trying to reach outside the map:\n" +
+                        "x = 7, map width range 0-6\n");
+    }
+
+    @Test
+    public void getScrappyFromMap_tooBigY() throws OutsideTheMapException {
+        // given
+        map = new WorldMap(7, 5);
+        map.place(new Scrappy(), 3, 3);
+
+        // when
+        assertThatThrownBy(() -> map.getObject(3, 5))
+
+                // then
+                .isInstanceOf(OutsideTheMapException.class)
+                .hasMessage("Trying to reach outside the map:\n" +
+                        "y = 5, map height range 0-4\n");
+    }
+
+    @Test
+    public void getScrappyFromMap_tooBigXY() throws OutsideTheMapException {
+        // given
+        map = new WorldMap(7, 5);
+        map.place(new Scrappy(), 3, 3);
+
+        // when
+        assertThatThrownBy(() -> map.getObject(7, 5))
+
+                // then
+                .isInstanceOf(OutsideTheMapException.class)
+                .hasMessage("Trying to reach outside the map:\n" +
+                        "x = 7, map width range 0-6\n" +
+                        "y = 5, map height range 0-4\n");
+    }
+
+    @Test
+    public void getScrappyFromMap_withinTheMap() throws OutsideTheMapException {
+        // given
+        map = new WorldMap(7, 5);
+        Scrappy scrappy = new Scrappy();
+        map.place(scrappy, 3, 3);
+
+        // when
+        MapObject object = map.getObject(3, 3);
+
+        // then
+        assertThat(object).isEqualTo(scrappy);
     }
 }
