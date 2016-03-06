@@ -7,10 +7,14 @@ import java.util.Arrays;
 
 public class Map {
 
+    private int width;
+    private int height;
     private MapObject[][] map;
 
-    public Map(int height, int width) {
-        this.map = new MapObject[width][height];
+    public Map(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.map = new MapObject[height][width];
         for (MapObject[] row : map) {
             Arrays.fill(row, new Ground());
         }
@@ -36,7 +40,11 @@ public class Map {
         return result;
     }
 
-    public void place(Scrappy scrappy, int x, int y) {
+    public void place(Scrappy scrappy, int x, int y) throws OutsideTheMapPlacementException {
+        if (x >= width || y >= height) {
+            throw new OutsideTheMapPlacementException(width, height, x, y);
+        }
         map[x][y] = scrappy;
     }
+
 }
