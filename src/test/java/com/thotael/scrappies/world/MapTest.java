@@ -1,6 +1,6 @@
 package com.thotael.scrappies.world;
 
-import com.thotael.scrappies.animalcule.Scrappy;
+import com.thotael.scrappies.world.animalcule.Scrappy;
 import org.junit.Before;
 import org.junit.Test;
 

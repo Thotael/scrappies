@@ -1,4 +1,4 @@
-package com.thotael.scrappies.animalcule;
+package com.thotael.scrappies.world.animalcule;
 
 import com.thotael.scrappies.world.MapObject;
 

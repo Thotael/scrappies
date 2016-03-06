@@ -1,6 +1,7 @@
 package com.thotael.scrappies.world;
 
-import com.thotael.scrappies.animalcule.Scrappy;
+import com.thotael.scrappies.world.animalcule.Scrappy;
+import com.thotael.scrappies.world.terrain.Ground;
 
 import java.util.Arrays;
 
