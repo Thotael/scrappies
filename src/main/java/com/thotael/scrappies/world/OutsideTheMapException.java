@@ -1,6 +1,6 @@
 package com.thotael.scrappies.world;
 
-public class OutsideTheMapException extends Exception {
+public class OutsideTheMapException extends RuntimeException {
 
     public OutsideTheMapException(int width, int height, int x, int y) {
         super(prepareMessage(width, height, x, y));

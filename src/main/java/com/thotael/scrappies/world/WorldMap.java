@@ -52,21 +52,29 @@ public class WorldMap {
         sb.append("\n");
     }
 
-    public void place(MapObject object, int x, int y) throws OutsideTheMapException {
+    public void place(MapObject object, int x, int y){
         checkIfReachingWithinTheMap(x, y);
+        checkIfLegalPlace(x, y);
 
         maps.get(y).getElements().set(x, object);
     }
 
-    public MapObject getObject(int x, int y) throws OutsideTheMapException {
+    public MapObject getObject(int x, int y) {
         checkIfReachingWithinTheMap(x, y);
 
         return maps.get(y).getElements().get(x);
     }
 
-    private void checkIfReachingWithinTheMap(int x, int y) throws OutsideTheMapException {
+    private void checkIfReachingWithinTheMap(int x, int y) {
         if (x >= width || y >= height) {
             throw new OutsideTheMapException(width, height, x, y);
+        }
+    }
+
+    private void checkIfLegalPlace(int x, int y) {
+        MapObject object = getObject(x, y);
+        if (object instanceof Mountain) {
+           throw new IllegalPlaceException(object, x, y);
         }
     }
 }

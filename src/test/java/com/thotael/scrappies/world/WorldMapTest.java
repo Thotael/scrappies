@@ -179,7 +179,7 @@ public class WorldMapTest {
     }
 
     @Test
-    public void getScrappyFromMap_tooBigXY() throws OutsideTheMapException {
+    public void getScrappyFromMap_tooBigXY() {
         // given
         map = new WorldMap(7, 5);
         map.place(new Scrappy(), 3, 3);
@@ -206,6 +206,20 @@ public class WorldMapTest {
 
         // then
         assertThat(object).isEqualTo(scrappy);
+    }
+
+    @Test
+    public void placeObject_OnMountain() throws OutsideTheMapException {
+        // given
+        map = new WorldMap(7, 5);
+        Scrappy scrappy = new Scrappy();
+
+        // when
+        assertThatThrownBy(() -> map.place(scrappy, 6, 4))
+
+        // then
+                .isInstanceOf(IllegalPlaceException.class)
+                .hasMessage("[6, 4] Trying to place something on illegal object: [Mountain: ^]");
     }
 
 }
