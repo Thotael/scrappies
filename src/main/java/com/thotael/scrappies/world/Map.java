@@ -1,5 +1,7 @@
 package com.thotael.scrappies.world;
 
+import com.thotael.scrappies.animalcule.Scrappy;
+
 import java.util.Arrays;
 
 public class Map {
@@ -33,5 +35,9 @@ public class Map {
             }
         }
         return result;
+    }
+
+    public void place(Scrappy scrappy, int x, int y) {
+        map[x][y] = scrappy.getAppearance();
     }
 }

@@ -1,5 +1,7 @@
 package com.thotael.scrappies;
 
+import com.thotael.scrappies.world.Map;
+
 public class Launcher {
 
     public static void main(String[] args) {
