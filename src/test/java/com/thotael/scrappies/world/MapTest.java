@@ -51,7 +51,7 @@ public class MapTest {
         // then
         assertThat(map.toString(), is(
                 "__\n" +
-                        "__"
+                "__"
         ));
     }
 
@@ -63,8 +63,8 @@ public class MapTest {
         // then
         assertThat(map.toString(), is(
                 "___\n" +
-                        "___\n" +
-                        "___"
+                "___\n" +
+                "___"
         ));
     }
 
@@ -79,8 +79,8 @@ public class MapTest {
         // then
         assertThat(map.toString(), is(
                 "___\n" +
-                        "_$_\n" +
-                        "___"
+                "_$_\n" +
+                "___"
         ));
     }
 }
